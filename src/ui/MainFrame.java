@@ -1,10 +1,15 @@
 package ui;
 
-public class MainFrame {
+import javax.swing.JFrame;
 
-    public void setVisible(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setVisible'");
+public class MainFrame extends JFrame {
+    public MainFrame() {
+        setTitle("Calendar");
+        setSize(800, 600);
+
+        // centers window on screen
+        setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
