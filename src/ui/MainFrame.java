@@ -128,6 +128,7 @@ public class MainFrame {
 
             JScrollPane scrollPane = new JScrollPane(scrollPanel);
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.getVerticalScrollBar().setUnitIncrement(25);
 
             activitiesPanel.add(scrollPane);
         }
