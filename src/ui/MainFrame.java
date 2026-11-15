@@ -20,6 +20,20 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.JTextPane;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
 public class MainFrame {
     // instance frame of extending class so we don't expose methods we don't need
     private final JFrame frame;
@@ -30,15 +44,16 @@ public class MainFrame {
         Locale locale = Locale.ENGLISH;
 
         frame = new JFrame("Calendar");
-        frame.setSize(800, 600);
+        frame.setSize(1280, 720);
 
-        JPanel topSection = new JPanel(new GridLayout(2, 1));
-        topSection.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // top spacing
-
+        JPanel weekPanel = new JPanel(new BorderLayout());
+        weekPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         JLabel weekLabel = new JLabel("Week " + currentWeek, SwingConstants.CENTER);
-        weekLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // bottom spacing
+        weekPanel.add(weekLabel);
+        frame.add(weekPanel, BorderLayout.NORTH);
 
         JPanel headerPanel = new JPanel(new GridLayout(1, 7));
+        JPanel activitiesPanel = new JPanel(new GridLayout(1, 7));
         LocalDate monday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // gets monday of current week
         for (int i = 0; i < 7; i++) {
             LocalDate currentDate = monday.plusDays(i);
@@ -55,14 +70,65 @@ public class MainFrame {
             datePanel.add(new JLabel(dayNumber + " " + monthName, SwingConstants.CENTER));
 
             headerPanel.add(datePanel);
+
+            // scrollable column
+            JPanel scrollPanel = new JPanel();
+            scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
+            scrollPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+            JButton addButton = new JButton("+");
+            addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            addButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+            addButton.addActionListener(e -> {
+                String activity = JOptionPane.showInputDialog(frame, "Activity for " + dayName + ":");
+                if (activity != null && !activity.isBlank()) {
+                    JTextPane cardContent = new JTextPane();
+                    cardContent.setText(activity.trim());
+                    cardContent.setEditable(false);
+                    cardContent.setFont(weekLabel.getFont());
+
+                    SimpleAttributeSet center = new SimpleAttributeSet();
+                    StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+                    cardContent.getStyledDocument().setParagraphAttributes(0, cardContent.getDocument().getLength(),
+                            center, false);
+
+                    JPanel card = new JPanel(new GridBagLayout());
+                    card.setBackground(Color.WHITE);
+                    card.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.weightx = 1.0;
+                    gbc.fill = GridBagConstraints.HORIZONTAL;
+                    card.add(cardContent, gbc);
+
+                    card.setPreferredSize(new Dimension(0, 50));
+                    card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+                    int index = scrollPanel.getComponentCount() - 1;
+                    scrollPanel.add(card, index);
+                    scrollPanel.add(Box.createVerticalStrut(4), index + 1);
+                    scrollPanel.revalidate();
+                }
+            });
+
+            scrollPanel.add(addButton);
+
+            JScrollPane scrollPane = new JScrollPane(scrollPanel);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+            activitiesPanel.add(scrollPane);
         }
 
-        topSection.add(weekLabel);
-        topSection.add(headerPanel);
-        frame.add(topSection, BorderLayout.NORTH);
+        frame.add(weekPanel, BorderLayout.NORTH);
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(headerPanel, BorderLayout.NORTH);
+        container.add(activitiesPanel, BorderLayout.CENTER);
+        frame.add(container, BorderLayout.CENTER);
 
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null); // centers window
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
