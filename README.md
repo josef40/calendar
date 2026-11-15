@@ -10,7 +10,5 @@ calendar/
     │   └── Calendar.java
     ├── ui/
     │   └── MainFrame.java
-    ├── util/
-    │   └── AppPreferences.java
     └── Main.java
 ```
