@@ -48,6 +48,9 @@ public class MainFrame {
             String monthName = currentDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
 
             JPanel datePanel = new JPanel(new GridLayout(2, 1));
+            if (currentDate.equals(now)) {
+                datePanel.setBackground(new Color(175, 215, 230));
+            }
             datePanel.add(new JLabel(dayName, SwingConstants.CENTER));
             datePanel.add(new JLabel(dayNumber + " " + monthName, SwingConstants.CENTER));
 
