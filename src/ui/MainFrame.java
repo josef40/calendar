@@ -11,54 +11,59 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 
 import java.util.Locale;
-import java.util.Calendar;
+
+import java.awt.Color;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 
 public class MainFrame {
     // instance frame of extending class so we don't expose methods we don't need
     private final JFrame frame;
 
     public MainFrame() {
-        Calendar now = Calendar.getInstance();
-        now.setFirstDayOfWeek(Calendar.MONDAY);
-        int currentWeek = now.get(Calendar.WEEK_OF_YEAR);
+        LocalDate now = LocalDate.now();
+        int currentWeek = now.get(WeekFields.ISO.weekOfWeekBasedYear());
+        Locale locale = Locale.ENGLISH;
 
         frame = new JFrame("Calendar");
-        // frame.setTitle("Calendar");
         frame.setSize(800, 600);
 
-        frame.setLayout(new BorderLayout());
-
-        JPanel topContainer = new JPanel(new GridLayout(2, 1));
-        topContainer.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        JPanel topSection = new JPanel(new GridLayout(2, 1));
+        topSection.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0)); // top spacing
 
         JLabel weekLabel = new JLabel("Week " + currentWeek, SwingConstants.CENTER);
-        weekLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); //
-        topContainer.add(weekLabel);
+        weekLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0)); // bottom spacing
 
         JPanel headerPanel = new JPanel(new GridLayout(1, 7));
-        now.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        LocalDate monday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // gets monday of current week
         for (int i = 0; i < 7; i++) {
-            String dayName = now.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH);
-            int dayOfMonth = now.get(Calendar.DAY_OF_MONTH);
-            String monthName = now.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH);
+            LocalDate currentDate = monday.plusDays(i);
 
-            JPanel dayCell = new JPanel(new GridLayout(2, 1));
-            dayCell.add(new JLabel(dayName, SwingConstants.CENTER));
-            dayCell.add(new JLabel(dayOfMonth + " " + monthName, SwingConstants.CENTER));
+            String dayName = currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, locale);
+            int dayNumber = currentDate.getDayOfMonth();
+            String monthName = currentDate.getMonth().getDisplayName(TextStyle.SHORT, locale);
 
-            headerPanel.add(dayCell);
-            now.add(Calendar.DAY_OF_MONTH, 1);
+            JPanel datePanel = new JPanel(new GridLayout(2, 1));
+            datePanel.add(new JLabel(dayName, SwingConstants.CENTER));
+            datePanel.add(new JLabel(dayNumber + " " + monthName, SwingConstants.CENTER));
+
+            headerPanel.add(datePanel);
         }
-        topContainer.add(headerPanel);
 
-        frame.add(topContainer, BorderLayout.NORTH);
+        topSection.add(weekLabel);
+        topSection.add(headerPanel);
+        frame.add(topSection, BorderLayout.NORTH);
 
-        frame.setLocationRelativeTo(null); // centers window on screen
+        frame.setLocationRelativeTo(null); // centers window
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void Show() {
+    public void show() {
         frame.setVisible(true);
     }
 }

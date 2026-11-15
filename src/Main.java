@@ -22,7 +22,7 @@ public class Main {
             // wire model and view
             // new MainController(model, view);
 
-            view.Show();
+            view.show();
         });
     }
 }
