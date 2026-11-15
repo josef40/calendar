@@ -1,6 +1,10 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.BorderFactory;
@@ -34,6 +38,8 @@ import javax.swing.text.StyleConstants;
 public class MainFrame {
     // instance frame of extending class so we don't expose methods we don't need
     private final JFrame frame;
+
+    private final Map<LocalDate, List<String>> activities = new HashMap<>();
 
     public MainFrame() {
         LocalDate now = LocalDate.now();
@@ -81,8 +87,10 @@ public class MainFrame {
             addButton.addActionListener(e -> {
                 String activity = JOptionPane.showInputDialog(frame, "Activity for " + dayName + ":");
                 if (activity != null && !activity.isBlank()) {
+                    String text = activity.trim().replaceAll(" +", " ");
+
                     JTextPane cardContent = new JTextPane();
-                    cardContent.setText(activity.trim());
+                    cardContent.setText(text);
                     cardContent.setEditable(false);
                     cardContent.setFont(weekLabel.getFont());
 
@@ -115,12 +123,16 @@ public class MainFrame {
                         scrollPanel.remove(spacer);
                         scrollPanel.revalidate();
                         scrollPanel.repaint();
+                        activities.getOrDefault(currentDate, List.of()).remove(text);
                     });
 
                     int index = scrollPanel.getComponentCount() - 1;
                     scrollPanel.add(card, index);
                     scrollPanel.add(spacer, index + 1);
                     scrollPanel.revalidate();
+
+                    activities.computeIfAbsent(currentDate, k -> new ArrayList<>()).add(text);
+
                 }
             });
 
