@@ -1,18 +1,9 @@
 package ui;
 
-import javax.swing.JFrame;
-import javax.swing.BorderFactory;
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
-import javax.swing.SwingConstants;
-import java.awt.GridLayout;
-
 import java.util.Locale;
 
-import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.BorderFactory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -20,19 +11,25 @@ import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
-import java.awt.Component;
-import java.awt.Dimension;
 import javax.swing.JTextPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 
 public class MainFrame {
     // instance frame of extending class so we don't expose methods we don't need
@@ -50,6 +47,7 @@ public class MainFrame {
         weekPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         JLabel weekLabel = new JLabel("Week " + currentWeek, SwingConstants.CENTER);
         weekPanel.add(weekLabel);
+        frame.add(weekPanel, BorderLayout.NORTH);
 
         JPanel headerPanel = new JPanel(new GridLayout(1, 7));
         JPanel activitiesPanel = new JPanel(new GridLayout(1, 7));
@@ -77,6 +75,7 @@ public class MainFrame {
 
             JButton addButton = new JButton("+");
             addButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            addButton.setPreferredSize(new Dimension(0, 50));
             addButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
             addButton.addActionListener(e -> {
@@ -132,8 +131,6 @@ public class MainFrame {
 
             activitiesPanel.add(scrollPane);
         }
-
-        frame.add(weekPanel, BorderLayout.NORTH);
         JPanel container = new JPanel(new BorderLayout());
         container.add(headerPanel, BorderLayout.NORTH);
         container.add(activitiesPanel, BorderLayout.CENTER);
