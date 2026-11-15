@@ -50,7 +50,6 @@ public class MainFrame {
         weekPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         JLabel weekLabel = new JLabel("Week " + currentWeek, SwingConstants.CENTER);
         weekPanel.add(weekLabel);
-        frame.add(weekPanel, BorderLayout.NORTH);
 
         JPanel headerPanel = new JPanel(new GridLayout(1, 7));
         JPanel activitiesPanel = new JPanel(new GridLayout(1, 7));
@@ -102,12 +101,26 @@ public class MainFrame {
                     gbc.fill = GridBagConstraints.HORIZONTAL;
                     card.add(cardContent, gbc);
 
+                    JButton removeButton = new JButton("x");
+                    removeButton.setBorder(BorderFactory.createEmptyBorder(0, 6, 0, 6));
+                    removeButton.setContentAreaFilled(false);
+                    removeButton.setFocusPainted(false);
+                    card.add(removeButton);
+
                     card.setPreferredSize(new Dimension(0, 50));
                     card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
+                    Component spacer = Box.createVerticalStrut(4);
+                    removeButton.addActionListener(ev -> {
+                        scrollPanel.remove(card);
+                        scrollPanel.remove(spacer);
+                        scrollPanel.revalidate();
+                        scrollPanel.repaint();
+                    });
+
                     int index = scrollPanel.getComponentCount() - 1;
                     scrollPanel.add(card, index);
-                    scrollPanel.add(Box.createVerticalStrut(4), index + 1);
+                    scrollPanel.add(spacer, index + 1);
                     scrollPanel.revalidate();
                 }
             });
@@ -116,7 +129,6 @@ public class MainFrame {
 
             JScrollPane scrollPane = new JScrollPane(scrollPanel);
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
             activitiesPanel.add(scrollPane);
         }
