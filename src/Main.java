@@ -5,11 +5,13 @@ import model.Calendar;
 import controller.MainController;
 import ui.MainFrame;
 
-/* app entry point */
+/** starts the program */
 public class Main {
-    /* initializes mvc architecture */
+    /**
+     * instaniates classes on swing's ui EDT thread, in the end JFrame is set to
+     * visible
+     */
     public static void main(String[] args) {
-        // schedules code to run on ui thread
         SwingUtilities.invokeLater(() -> {
             Calendar calendar = new Calendar();
             MainFrame frame = new MainFrame();
