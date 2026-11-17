@@ -45,7 +45,7 @@ public class MainController {
         frame.refreshDay(date, calendar.getActivities(date));
     }
 
-    /*
+    /**
      * calls show method from MainFrame which sets frame to visible, need to have
      * this instead of calling show from main directly since we need to make sure
      * this class is initialized before setting
