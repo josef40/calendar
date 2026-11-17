@@ -188,6 +188,7 @@ public class MainFrame {
         cardContent.setText(text);
         cardContent.setEditable(false);
         cardContent.setFont(UIManager.getFont("Label.font"));
+        cardContent.setToolTipText(text);
 
         // centers text in card content
         SimpleAttributeSet center = new SimpleAttributeSet();
