@@ -1,6 +1,6 @@
 # 📅 Calendar
 
-A calendar desktop app built with Java and Swing that shows you the current iek and allows you to add and remove activities.
+A calendar desktop app built with Java and Swing that shows you the current week and allows you to add and remove activities.
 
 ## 🧩 Classes
 * `MainController` acts as the middle man betien MainFrame and Calendar, adding and removing actitivies both internally and externally
