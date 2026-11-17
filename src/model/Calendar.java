@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * stores activities in a map, has methods that other classes can use to add,
- * remove, and get activities
+ * stores activities in a map, has methods that MainController uses to add,
+ * remove, and get activities in MainFrame
  */
 public class Calendar {
     private final Map<LocalDate, List<String>> activities = new HashMap<>();

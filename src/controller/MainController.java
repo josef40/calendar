@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 /**
  * acts as the middle man between MainFrame and Calendar, adding and removing
- * actitivies both internally and externally
+ * actitivies
  */
 public class MainController {
     private final Calendar calendar;

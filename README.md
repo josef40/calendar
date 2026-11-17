@@ -3,8 +3,8 @@
 A calendar desktop app built with Java and Swing that shows you the current week and allows you to add and remove activities.
 
 ## 🧩 Classes
-* `MainController` acts as the middle man between MainFrame and Calendar, adding and removing actitivies both internally and externally
-* `Calendar` stores activities in a map, has methods that other classes can use to add, remove, and get activities
+* `MainController` acts as the middle man between MainFrame and Calendar, adding and removing actitivies
+* `Calendar` stores activities in a map, has methods that MainController uses to add, remove, and get activities
 * `MainFrame` handles the UI part of the app, creates window and components that make up the visuals, also gives interactive components like buttons functionality
 * `Main` starts the program
 
