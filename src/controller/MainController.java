@@ -28,7 +28,7 @@ public class MainController {
     /**
      * handles input and adds it as activity, checks if input is null or blank,
      * cleans text, adds it to
-     * activites list in Calendar, and then adds to the ui using MainFrame method
+     * activities list in Calendar, and then adds to the ui using MainFrame method
      */
     private void handleAddActivity(LocalDate date, String rawInput) {
         if (rawInput == null || rawInput.isBlank()) {
@@ -47,7 +47,7 @@ public class MainController {
 
     /**
      * calls show method from MainFrame which sets frame to visible, need to have
-     * this instead of calling show from main directly since we need to make sure
+     * this instead of calling show from main directly since need to make sure
      * this class is initialized before setting
      * frame to visible
      */
