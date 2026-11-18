@@ -59,9 +59,10 @@ public class MainFrame {
         frame.setSize(1280, 720);
         frame.setResizable(false);
 
-        frame.add(createWeekHeader(currentWeek), BorderLayout.NORTH); // creates a week header by using current week
+        JPanel topSection = new JPanel(new BorderLayout()); // top section holds week header and the 7 dates
 
-        // creates 7 headers and 7 areas that then is added to a container
+        topSection.add(createWeekHeader(currentWeek), BorderLayout.NORTH);
+
         JPanel headerPanel = new JPanel(new GridLayout(1, 7));
         JPanel activitiesPanel = new JPanel(new GridLayout(1, 7));
         LocalDate monday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // gets date of latest monday
@@ -70,10 +71,10 @@ public class MainFrame {
             headerPanel.add(createDayHeader(currentDate, now));
             activitiesPanel.add(createDayColumn(currentDate));
         }
-        JPanel container = new JPanel(new BorderLayout());
-        container.add(headerPanel, BorderLayout.NORTH);
-        container.add(activitiesPanel, BorderLayout.CENTER);
-        frame.add(container, BorderLayout.CENTER);
+        topSection.add(headerPanel, BorderLayout.CENTER);
+
+        frame.add(topSection, BorderLayout.NORTH);
+        frame.add(activitiesPanel, BorderLayout.CENTER);
 
         frame.setLocationRelativeTo(null); // centers window on screen
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
