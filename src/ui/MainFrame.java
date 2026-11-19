@@ -69,7 +69,7 @@ public class MainFrame {
         for (int i = 0; i < 7; i++) {
             LocalDate currentDate = monday.plusDays(i);
             dayHeaderSection.add(createDayHeader(currentDate, now));
-            activitySection.add(createDayColumn(currentDate));
+            activitySection.add(createActivityColumn(currentDate));
         }
         topSection.add(dayHeaderSection, BorderLayout.CENTER);
 
@@ -147,7 +147,7 @@ public class MainFrame {
      * sets up the scrolling area, adds add activity button, and adds activity with
      * dialog when press button
      */
-    private JScrollPane createDayColumn(LocalDate date) {
+    private JScrollPane createActivityColumn(LocalDate date) {
         // creates area will boxes will be
         JPanel scrollPanel = new JPanel();
         scrollPanel.setLayout(new BoxLayout(scrollPanel, BoxLayout.Y_AXIS));
