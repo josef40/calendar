@@ -63,18 +63,18 @@ public class MainFrame {
 
         topSection.add(createWeekHeader(currentWeek), BorderLayout.NORTH);
 
-        JPanel headerPanel = new JPanel(new GridLayout(1, 7));
-        JPanel activitiesPanel = new JPanel(new GridLayout(1, 7));
+        JPanel dayHeaderSection = new JPanel(new GridLayout(1, 7));
+        JPanel activitySection = new JPanel(new GridLayout(1, 7));
         LocalDate monday = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // gets date of latest monday
         for (int i = 0; i < 7; i++) {
             LocalDate currentDate = monday.plusDays(i);
-            headerPanel.add(createDayHeader(currentDate, now));
-            activitiesPanel.add(createDayColumn(currentDate));
+            dayHeaderSection.add(createDayHeader(currentDate, now));
+            activitySection.add(createDayColumn(currentDate));
         }
-        topSection.add(headerPanel, BorderLayout.CENTER);
+        topSection.add(dayHeaderSection, BorderLayout.CENTER);
 
         frame.add(topSection, BorderLayout.NORTH);
-        frame.add(activitiesPanel, BorderLayout.CENTER);
+        frame.add(activitySection, BorderLayout.CENTER);
 
         frame.setLocationRelativeTo(null); // centers window on screen
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
