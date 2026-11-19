@@ -113,7 +113,7 @@ public class MainFrame {
 
         // adds card for every activity
         for (String text : activities) {
-            addActivityCard(scrollPanel, date, text);
+            addActivity(scrollPanel, date, text);
         }
 
         scrollPanel.revalidate(); // recalculates layout
@@ -183,7 +183,7 @@ public class MainFrame {
     }
 
     /** creates activity card using passed panel, date, text */
-    private void addActivityCard(JPanel scrollPanel, LocalDate date, String text) {
+    private void addActivity(JPanel scrollPanel, LocalDate date, String text) {
         // creates card content
         JTextPane cardContent = new JTextPane();
         cardContent.setText(text);
