@@ -134,13 +134,13 @@ public class MainFrame {
         int dayNumber = date.getDayOfMonth();
         String monthName = date.getMonth().getDisplayName(TextStyle.SHORT, locale);
 
-        JPanel datePanel = new JPanel(new GridLayout(2, 1));
+        JPanel dayInfoHolder = new JPanel(new GridLayout(2, 1));
         if (date.equals(today)) {
-            datePanel.setBackground(new Color(175, 215, 230)); // marks current day with background color
+            dayInfoHolder.setBackground(Color.CYAN); // marks current day with background color
         }
-        datePanel.add(new JLabel(dayName, SwingConstants.CENTER));
-        datePanel.add(new JLabel(dayNumber + " " + monthName, SwingConstants.CENTER));
-        return datePanel;
+        dayInfoHolder.add(new JLabel(dayName, SwingConstants.CENTER));
+        dayInfoHolder.add(new JLabel(dayNumber + " " + monthName, SwingConstants.CENTER));
+        return dayInfoHolder;
     }
 
     /**
